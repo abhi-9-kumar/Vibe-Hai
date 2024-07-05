@@ -12,7 +12,9 @@ import { BiComment } from "react-icons/bi";
 import { IoIosShareAlt } from "react-icons/io";
 import { IoMdSave } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
-
+import GoogleLoginButton from "../../components/GoogleLogin/GoogleLoginButton";
+import { useCallback } from "react";
+import { CredentialResponse } from '@react-oauth/google';
 
 
 interface VibeHaiSidebarButton{
@@ -57,6 +59,9 @@ const sidebarMenuItems: VibeHaiSidebarButton[]=[
 
 
 export default function Home() {
+  const handleLoginWithGoogle = useCallback((response: CredentialResponse) => {}, []);
+
+
   return (
     <div className="grid grid-cols-12 h-screen w-screen">
       <div className=" col-span-3 pt-8 px-20 font-sans">
@@ -139,8 +144,12 @@ export default function Home() {
 
             
       </div>
-      <div className="col-span-3">
-
+      <div className="col-span-3 p-5">
+          <div className="p-5 pl-9 bg-violet-300 rounded-lg">
+          <h1 className="my-2 text-2xl">New to Vibe Hai!! ?</h1>
+          <GoogleLoginButton />
+      
+          </div>  
       </div>
     </div>
   );
