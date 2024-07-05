@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-
+import { prismaClient } from '../clients/db';
 
 export async function initServer(){
     const app= express();
@@ -13,13 +13,15 @@ export async function initServer(){
     const graphqlServer = new ApolloServer({
         typeDefs:`
         type Query{
-            sayHello: String       
+            sayHello: String   
+            sayHelloToMe(name:String!):String    
         }
         
         `,
         resolvers:{
             Query:{
                 sayHello:()=>`Hello from Graphql Server`,
+                sayHelloToMe: (parent:any,{name}:{name:string})=>`Hey ${name}`
             },
         },
       });
