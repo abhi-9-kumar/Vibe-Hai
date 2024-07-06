@@ -20,7 +20,11 @@ const GoogleLoginButton = () => {
 
     toast.success("Verified Success");
     console.log(verifyGoogleToken);
-  }, []);
+    
+    if(verifyGoogleToken) 
+      window.localStorage.setItem("__vibe_token",verifyGoogleToken);
+  }, 
+  []);
 
   return <GoogleLogin onSuccess={handleLoginWithGoogle} />;
 };
