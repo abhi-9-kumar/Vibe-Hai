@@ -12,9 +12,18 @@ import { BiComment } from "react-icons/bi";
 import { IoIosShareAlt } from "react-icons/io";
 import { IoMdSave } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
-import GoogleLoginButton from "../../components/GoogleLogin/GoogleLoginButton";
 import { useCallback } from "react";
-import { CredentialResponse } from '@react-oauth/google';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import toast from "react-hot-toast";
+import { graphqlClient } from "../../clients/api";
+import { verifyUserGoogleTokenQuery } from "../../graphql/query/user";
+import dynamic from "next/dynamic";
+
+// Dynamically import the Client Component to avoid SSR issues
+const GoogleLoginButton = dynamic(
+  () => import("../../components/GoogleLogin/GoogleLoginButton"),
+  { ssr: false }
+);
 
 
 interface VibeHaiSidebarButton{
@@ -59,7 +68,21 @@ const sidebarMenuItems: VibeHaiSidebarButton[]=[
 
 
 export default function Home() {
-  const handleLoginWithGoogle = useCallback((response: CredentialResponse) => {}, []);
+  const handleLoginWithGoogle = useCallback(async(response: CredentialResponse) => {
+    const googleToken=response.credential;
+
+    if(!googleToken) return toast.error(`Google token not found`);
+
+    const{verifyGoogleToken }=await graphqlClient.request(
+      verifyUserGoogleTokenQuery,
+      {token: googleToken}
+    );
+
+    toast.success("Verified Sucess");
+    console.log(verifyGoogleToken);
+  },
+  []
+  );
 
 
   return (

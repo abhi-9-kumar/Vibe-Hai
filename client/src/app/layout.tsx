@@ -28,7 +28,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'react-hot-toast';
-import type { AppProps } from "next/app";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,9 +44,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <GoogleOAuthProvider clientId="664419105178-feqb82cag4lcod0gne8hl4j3gbls79qk.apps.googleusercontent.com">
-        <body className={inter.className}>{children}</body>
-      </GoogleOAuthProvider>
+      <body className={inter.className}>
+        <GoogleOAuthProvider clientId="664419105178-feqb82cag4lcod0gne8hl4j3gbls79qk.apps.googleusercontent.com">
+          {children}
+          <Toaster />
+        </GoogleOAuthProvider>
+      </body>
     </html>
   );
 }
