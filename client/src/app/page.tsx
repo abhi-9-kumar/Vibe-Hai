@@ -68,21 +68,21 @@ const sidebarMenuItems: VibeHaiSidebarButton[]=[
 
 
 export default function Home() {
-  const handleLoginWithGoogle = useCallback(async(response: CredentialResponse) => {
-    const googleToken=response.credential;
+  // const handleLoginWithGoogle = useCallback(async(response: CredentialResponse) => {
+  //   const googleToken=response.credential;
 
-    if(!googleToken) return toast.error(`Google token not found`);
+  //   if(!googleToken) return toast.error(`Google token not found`);
 
-    const{verifyGoogleToken }=await graphqlClient.request(
-      verifyUserGoogleTokenQuery,
-      {token: googleToken}
-    );
+  //   const{verifyGoogleToken }=await graphqlClient.request(
+  //     verifyUserGoogleTokenQuery,
+  //     {token: googleToken}
+  //   );
 
-    toast.success("Verified Sucess");
-    console.log(verifyGoogleToken);
-  },
-  []
-  );
+  //   toast.success("Verified Sucess");
+  //   console.log(verifyGoogleToken);
+  // },
+  // []
+  // );
 
 
   return (
