@@ -88,12 +88,12 @@ export default function Home() {
   return (
     <div className="grid grid-cols-12 h-screen w-screen">
       <div className=" col-span-3 pt-8 px-20 font-sans">
-
-        <div className="text-6xl ml-9 h-fit w-fit hover:bg-violet-500 rounded-full p-2 cursor-pointer transition-all">
+        
+        <div className="text-7xl ml-12 h-fit w-fit hover:bg-violet-500 rounded-full p-2 cursor-pointer transition-all">
         <BiHeartCircle />
         </div>
 
-          <div className="mt-7 text-2xl font-semibold">
+          <div className="mt-7 ml-7 text-[1.25rem] font-semibold">
             <ul>
             {sidebarMenuItems.map((item)=> (
             <li className="flex justify-start items-center gap-4  hover:bg-violet-500 rounded-full px-5 py-2.5 w-fit cursor-pointer mt-2"
@@ -106,7 +106,7 @@ export default function Home() {
 
             ))}
             </ul>
-              <div className="mt-10 mx-8 text-2xl ">
+              <div className="mt-7 mx-5 text-2xl ">
               <button className="bg-violet-800 p-3 rounded-full text-white border-4 border-transparent hover:text-violet-900 hover:border-violet-900 hover:bg-white transition duration-200 ease-in-out">Create vibe</button>
               </div>
           </div>
