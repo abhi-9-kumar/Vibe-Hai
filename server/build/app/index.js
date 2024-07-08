@@ -39,6 +39,7 @@ function initServer() {
             },
         });
         yield graphqlServer.start();
+        // app.use('/graphql', expressMiddleware(graphqlServer));
         app.use('/graphql', (0, express4_1.expressMiddleware)(graphqlServer, {
             context: (_a) => __awaiter(this, [_a], void 0, function* ({ req, res }) {
                 var _b;

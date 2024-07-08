@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { BiHeartCircle } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
@@ -18,6 +19,7 @@ import toast from "react-hot-toast";
 import { graphqlClient } from "../../clients/api";
 import { verifyUserGoogleTokenQuery } from "../../graphql/query/user";
 import dynamic from "next/dynamic";
+import { useCurrentUser } from "../../hooks/user";
 
 // Dynamically import the Client Component to avoid SSR issues
 const GoogleLoginButton = dynamic(
@@ -83,6 +85,9 @@ export default function Home() {
   // },
   // []
   // );
+
+  const {user}=useCurrentUser()
+  console.log(user);
 
 
   return (
@@ -168,11 +173,13 @@ export default function Home() {
             
       </div>
       <div className="col-span-3 p-5">
-          <div className="p-5 pl-9 bg-violet-300 rounded-lg">
+         {!user && 
+          (<div className="p-5 pl-9 bg-violet-300 rounded-lg">
           <h1 className="my-2 text-2xl">New to Vibe Hai!! ?</h1>
           <GoogleLoginButton />
+         
       
-          </div>  
+          </div> )} 
       </div>
     </div>
   );
