@@ -55,4 +55,9 @@ const queries = {
         return user;
     }),
 };
-exports.resolvers = { queries };
+const extraResolvers = {
+    User: {
+        vibes: (parent) => db_1.prismaClient.vibe.findMany({ where: { author: { id: parent.id } } })
+    }
+};
+exports.resolvers = { queries, extraResolvers };

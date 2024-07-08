@@ -7,8 +7,11 @@ import { prismaClient } from '../clients/db';
 
 
 import {User} from './user';
+import {Vibe} from './vibe';
 import { GraphqlContext } from '../interfaces';
 import JWTService from '../services/jwt';
+
+
 
 export async function initServer(){
     const app= express();
@@ -19,17 +22,30 @@ export async function initServer(){
 
     const graphqlServer = new ApolloServer<GraphqlContext>({
         typeDefs:`
-        ${User.types} 
+        ${User.types}
+        ${Vibe.types} 
+
         
         type Query{
             ${User.queries}
+            ${Vibe.queries}
+        }
+        type Mutation{
+        ${Vibe.mutations}
         }
         
         `,
         resolvers:{
             Query:{
                 ...User.resolvers.queries,
+                ...Vibe.resolvers.queries,
             },
+            Mutation:{
+                ...Vibe.resolvers.mutations,
+            },
+            ...Vibe.resolvers.extraResolvers,
+
+            ...User.resolvers.extraResolvers,
         },
       });
 

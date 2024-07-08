@@ -19,6 +19,7 @@ const cors_1 = __importDefault(require("cors"));
 const server_1 = require("@apollo/server");
 const express4_1 = require("@apollo/server/express4");
 const user_1 = require("./user");
+const vibe_1 = require("./vibe");
 const jwt_1 = __importDefault(require("../services/jwt"));
 function initServer() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,16 +28,20 @@ function initServer() {
         app.use((0, cors_1.default)());
         const graphqlServer = new server_1.ApolloServer({
             typeDefs: `
-        ${user_1.User.types} 
+        ${user_1.User.types}
+        ${vibe_1.Vibe.types} 
+
         
         type Query{
             ${user_1.User.queries}
+            ${vibe_1.Vibe.queries}
+        }
+        type Mutation{
+        ${vibe_1.Vibe.mutations}
         }
         
         `,
-            resolvers: {
-                Query: Object.assign({}, user_1.User.resolvers.queries),
-            },
+            resolvers: Object.assign(Object.assign({ Query: Object.assign(Object.assign({}, user_1.User.resolvers.queries), vibe_1.Vibe.resolvers.queries), Mutation: Object.assign({}, vibe_1.Vibe.resolvers.mutations) }, vibe_1.Vibe.resolvers.extraResolvers), user_1.User.resolvers.extraResolvers),
         });
         yield graphqlServer.start();
         // app.use('/graphql', expressMiddleware(graphqlServer));

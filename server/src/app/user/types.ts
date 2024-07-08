@@ -6,6 +6,8 @@ type User{
     lastName: String
     email: String!
     profileImageURL: String
+
+    vibes:[Vibe]
     }
 
 `
