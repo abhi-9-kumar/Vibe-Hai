@@ -20,6 +20,7 @@ import { graphqlClient } from "../../clients/api";
 import { verifyUserGoogleTokenQuery } from "../../graphql/query/user";
 import dynamic from "next/dynamic";
 import { useCurrentUser } from "../../hooks/user";
+import { MdPermMedia } from "react-icons/md";
 
 // Dynamically import the Client Component to avoid SSR issues
 const GoogleLoginButton = dynamic(
@@ -87,7 +88,14 @@ export default function Home() {
   // );
 
   const {user}=useCurrentUser()
-  console.log(user);
+  //console.log(user);
+
+  const handleSelectImage = useCallback(()=>{
+  const input= document.createElement("input");
+  input.setAttribute("type","file");
+  input.setAttribute("accept","image/*");
+  input.click();
+  },[]);
 
 
   return (
@@ -142,6 +150,38 @@ export default function Home() {
 
       <div className="  col-span-5 w-full border-r-[2px] border-l-[2px] border-violet-800 h-screen overflow-scroll scrollbar-custom">
 
+         <div>
+          <div className=" w-full p-3 border border-r-0 border-l-0 border-b-0 border-violet-600 hover:bg-violet-300 transition-all cursor-pointer">
+            <div className="grid grid-cols-12">
+                <div className="col-span-1">
+                <Image
+                className="rounded-full object-fill border-4 border-violet-800 "
+                src={user?.profileImageURL ? user.profileImageURL : 
+               'https://www.shutterstock.com/image-vector/vector-user-account-profile-icon-260nw-2395787019.jpg'}
+                alt='Profile image'
+                height={50}
+                width={50}
+                  />
+                </div>
+
+                <div className="col-span-11 pl-4">
+                <textarea className="w-full bg-transparent text-xl px-3 border-b-2 border-violet-800 placeholder-violet" 
+                placeholder="Vibe attracts tribe...."
+                rows={3}></textarea>
+                <div className="mt-2 flex justify-between items-center">
+                <MdPermMedia onClick={handleSelectImage}
+                 className="text-2xl h-fit w-fit hover:bg-violet-600 p-2 cursor-pointer transition-all"/>
+                <button className="bg-violet-800 font-semibold text-sm py-2 px-3 rounded-full text-white">
+                Create vibe
+                </button>
+                </div>
+                </div>
+            </div>
+          </div>
+         </div>
+
+
+
           <div className=" w-full p-6 border border-r-0 border-l-0 border-b-0 border-violet-600 hover:bg-violet-300 transition-all cursor-pointer">
             { 
               <div className="grid grid-cols-12">
@@ -158,7 +198,7 @@ export default function Home() {
                     <p>
                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, maxime.
                     </p>
-                    <div className="flex pl-5 pr-5 justify-between mt-5 text-2xl items-center w-[90%]">
+                    <div className="flex pl-5 pr-5 justify-between mt-5 text-xl items-center w-[90%]">
                         <div>
                         <FaHandHoldingHeart />
                         </div>

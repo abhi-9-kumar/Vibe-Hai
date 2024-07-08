@@ -22,7 +22,7 @@ const FeedCard: React.FC = () => {
                     <p>
                       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi, numquam.
                     </p>
-                    <div className="flex p-2 pl-5 pr-5 justify-between mt-5 text-2xl items-center w-[90%]">
+                    <div className="flex p-2 pl-5 pr-5 justify-between mt-5 text-xl items-center w-[90%]">
                         <div>
                         <FaHandHoldingHeart />
                         </div>

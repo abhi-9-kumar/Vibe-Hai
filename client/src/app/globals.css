@@ -57,3 +57,13 @@ body {
   background: rgb(227, 199, 253) ; /* Background of the scrollbar track */
   border-radius: 10px; /* Rounded corners of the scrollbar track */
 }
+.placeholder-violet::placeholder {
+  color: #9570eb;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+*:focus{
+  outline: none;
+}
