@@ -6,8 +6,13 @@ import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import { graphqlClient } from "../../clients/api";
 import { verifyUserGoogleTokenQuery } from "../../graphql/query/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCurrentUser } from "../../hooks/user";
 
 const GoogleLoginButton = () => {
+  const queryClient = useQueryClient();
+  const { user } = useCurrentUser();
+
   const handleLoginWithGoogle = useCallback(async (response: CredentialResponse) => {
     const googleToken = response.credential;
 
@@ -23,8 +28,11 @@ const GoogleLoginButton = () => {
     
     if(verifyGoogleToken) 
       window.localStorage.setItem("__vibe_token",verifyGoogleToken);
+    await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+
   }, 
-  []);
+  [queryClient]
+);
 
   return <GoogleLogin onSuccess={handleLoginWithGoogle} />;
 };
