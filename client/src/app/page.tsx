@@ -13,7 +13,7 @@ import { BiComment } from "react-icons/bi";
 import { IoIosShareAlt } from "react-icons/io";
 import { IoMdSave } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import toast from "react-hot-toast";
 import { graphqlClient } from "../../clients/api";
@@ -21,6 +21,9 @@ import { verifyUserGoogleTokenQuery } from "../../graphql/query/user";
 import dynamic from "next/dynamic";
 import { useCurrentUser } from "../../hooks/user";
 import { MdPermMedia } from "react-icons/md";
+import { useCreateVibe, useGetAllVibes } from "../../hooks/vibe";
+import { Vibe } from "../../gql/graphql";
+import { mutate } from "swr";
 
 // Dynamically import the Client Component to avoid SSR issues
 const GoogleLoginButton = dynamic(
@@ -90,12 +93,27 @@ export default function Home() {
   const {user}=useCurrentUser()
   //console.log(user);
 
+  const {vibes = []}=useGetAllVibes();
+  
+  const {mutate}=useCreateVibe();
+
+
+  const [content,setContent]=useState("");
+
   const handleSelectImage = useCallback(()=>{
   const input= document.createElement("input");
   input.setAttribute("type","file");
   input.setAttribute("accept","image/*");
   input.click();
   },[]);
+
+  const handleCreateVibe = useCallback( () => {
+     mutate({
+      content,
+    
+    });
+    
+  }, [mutate, content]);
 
 
   return (
@@ -159,19 +177,24 @@ export default function Home() {
                 src={user?.profileImageURL ? user.profileImageURL : 
                'https://www.shutterstock.com/image-vector/vector-user-account-profile-icon-260nw-2395787019.jpg'}
                 alt='Profile image'
-                height={50}
-                width={50}
+                height={60}
+                width={60}
                   />
                 </div>
 
                 <div className="col-span-11 pl-4">
-                <textarea className="w-full bg-transparent text-xl px-3 border-b-2 border-violet-800 placeholder-violet" 
+                <textarea 
+                value={content}
+                onChange={e=>setContent(e.target.value)}
+
+                className="w-full bg-transparent text-xl px-3 border-b-2 border-violet-800 placeholder-violet" 
                 placeholder="Vibe attracts tribe...."
                 rows={3}></textarea>
                 <div className="mt-2 flex justify-between items-center">
                 <MdPermMedia onClick={handleSelectImage}
                  className="text-2xl h-fit w-fit hover:bg-violet-600 p-2 cursor-pointer transition-all"/>
-                <button className="bg-violet-800 font-semibold text-sm py-2 px-3 rounded-full text-white">
+
+                <button onClick ={handleCreateVibe} className="bg-violet-800 font-semibold text-sm py-2 px-3 rounded-full text-white">
                 Create vibe
                 </button>
                 </div>
@@ -180,54 +203,10 @@ export default function Home() {
           </div>
          </div>
 
-
-
-          <div className=" w-full p-6 border border-r-0 border-l-0 border-b-0 border-violet-600 hover:bg-violet-300 transition-all cursor-pointer">
-            { 
-              <div className="grid grid-cols-12">
-                <div className="col-span-1 ">
-                    <Image
-                        src="https://img.freepik.com/free-photo/3d-illustration-business-man-with-glasses-grey-background-clipping-path_1142-58140.jpg?size=626&ext=jpg&ga=GA1.1.1524447517.1719369788&semt=ais_user"
-                        alt="user-image"
-                        height={50}
-                        width={50}
-                    />
-                </div>
-                <div className="col-span-11 pl-4">
-                    <h5>Abhinav Kumar</h5>
-                    <p>
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, maxime.
-                    </p>
-                    <div className="flex pl-5 pr-5 justify-between mt-5 text-xl items-center w-[90%]">
-                        <div>
-                        <FaHandHoldingHeart />
-                        </div>
-                        <div>
-                        <BiComment />
-                        </div>
-                        <div>
-                        <IoIosShareAlt />
-                        </div>
-                        <div>
-                        <IoMdSave />
-                        </div>
-                    </div>
-                </div>
-            </div> 
-            
-            }
-
-          </div>
-      
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
-          <FeedCard/>
+           {
+            vibes?.map(vibe=>
+            vibe? <FeedCard key={vibe?.id}data={vibe as Vibe} /> : null)
+           }       
 
 
 
