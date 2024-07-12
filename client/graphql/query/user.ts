@@ -17,6 +17,15 @@ export const getCurrentUserQuery = graphql(`
     id
     lastName
     profileImageURL
+    vibes{
+      id
+      content
+      author{
+        firstName
+        lastName
+        profileImageURL
+        }
+    }
   }
 }
 `);

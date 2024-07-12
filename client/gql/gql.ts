@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  #graphql\n  mutation CreateVibe($payload: CreateVibeData!) {\n    createVibe(payload: $payload) {\n      id\n    }\n  }\n": types.CreateVibeDocument,
     "\n  #graphql\n  query VerifyUserGoogleTokenQuery($token: String!) {\n    verifyGoogleToken(token: $token)\n  }\n": types.VerifyUserGoogleTokenQueryDocument,
-    "\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n  }\n}\n": types.GetCurrentUserDocument,
+    "\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n    vibes{\n      id\n      content\n      author{\n        firstName\n        lastName\n        profileImageURL\n        }\n    }\n  }\n}\n": types.GetCurrentUserDocument,
     "\n    #graphql\n\n    query GetAllVibes{\n    getAllVibes{\n    id\n    content\n    imgUrl\n    author{\n    id\n    firstName\n    lastName\n    profileImageURL\n        }\n    }\n }\n    \n": types.GetAllVibesDocument,
 };
 
@@ -44,7 +44,7 @@ export function graphql(source: "\n  #graphql\n  query VerifyUserGoogleTokenQuer
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n  }\n}\n"): (typeof documents)["\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n  }\n}\n"];
+export function graphql(source: "\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n    vibes{\n      id\n      content\n      author{\n        firstName\n        lastName\n        profileImageURL\n        }\n    }\n  }\n}\n"): (typeof documents)["\n  query GetCurrentUser {\n  getCurrentUser {\n    email\n    firstName\n    id\n    lastName\n    profileImageURL\n    vibes{\n      id\n      content\n      author{\n        firstName\n        lastName\n        profileImageURL\n        }\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
